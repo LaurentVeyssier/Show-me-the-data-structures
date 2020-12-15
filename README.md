@@ -1,7 +1,7 @@
 # Show-me-the-data-structures
 Solve six programing tasks usign advanced data structures (linked list, queues, recursive functions...)
 
-These programming challenges are part of the scond project of UDACITY's [Data Structures & Algorithms Nanodegree Program]().
+These programming challenges are part of the scond project of UDACITY's [Data Structures & Algorithms Nanodegree Program](https://www.udacity.com/course/data-structures-and-algorithms-nanodegree--nd256).
 
 The questions cover a variety of topics related to the data structures learned in this course.The objective is to write up a clean and efficient solution in Python, taking into consideration the efficiency of the code and design choices. The code should be well explained, elegant and easy to read.
 
