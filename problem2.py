@@ -9,14 +9,15 @@ import os
 # Search function with recursive approach
 # Because no real order to the elements, the complexity of the search is O(n)
 # we must go through each element with n the number of items to explore
-def collect_files(path, filenames):
-    """ Explore folder structure and collect all files 
+def collect_files(suffix, path, filenames):
+    """ Explore folder structure and collect all files with target suffix
     inputs: 
-        path(str): path to search
+        suffix(str): suffix of the file name to be found
+:         path(str): path to search
         filenames(list): log of all filenames found in the structure
         
     Returns:
-        a list of all the files found in the structure identified by their filepath
+        a list of all the files found in the structure identified by their filepath and suffix
         """
     
     # collect all items in the folder
@@ -26,11 +27,12 @@ def collect_files(path, filenames):
     for filepath in filepaths:
         # if item is a sub-folder then explore recursively the resulting structure
         if os.path.isdir(os.path.join(path,filepath)):
-            filenames = collect_files(os.path.join(path,filepath), filenames)
+            filenames = collect_files(suffix, os.path.join(path,filepath), filenames)
         
-        # if item is a file, log the filepath in the output list
+        # if item is a file ending with targeted suffix, log the filepath in the output list
         elif os.path.isfile(os.path.join(path,filepath)):
-            filenames.append(os.path.join(path,filepath))
+            if filepath.endswith(suffix):
+                filenames.append(os.path.join(path,filepath))
     
     # return the list of files found in the whole structure            
     return filenames
@@ -46,7 +48,7 @@ def find_files(suffix, path):
     There are no limit to the depth of the subdirectories can be.
 
     Args:
-      suffix(str): suffix if the file name to be found
+      suffix(str): suffix of the file name to be found
       path(str): path of the file system
 
     Returns:
@@ -66,21 +68,15 @@ def find_files(suffix, path):
     
     # Call search function if path is a directory otherwise check the suffix
     if os.path.isdir(path):
-        filenames = collect_files(path, filenames)
+        filenames = collect_files(suffix, path, filenames)
     elif os.path.isfile(path) and path.endswith(suffix):
         filenames.append(path)
     # defensive code in case the path is neither a dirpath or a filepath
     else:
         return []
     
-    # Filter the targeted files from the file list returned by the search function
-    output =  []
-    for file in filenames:             # Complexity is O(k) with k = total number of files found)
-        if file.endswith(suffix):
-            output.append(file)
-    
     # return the list of files with targeted suffix
-    return output
+    return filenames
 
 
 

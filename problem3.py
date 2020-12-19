@@ -31,7 +31,7 @@ class Tree:
     def pull(self):
         return self.items.pop(0)
     
-    # allow to insert an element taking frequency order in consideration
+    # allow to insert an element taking frequency order in consideration - worst case O(n)
     def insert(self, node):
         size=self.length()
         if size == 0:
@@ -88,8 +88,8 @@ def huffman_encoding(data):
     
     # Build Huffman Tree
     ''' Pull operations from priority list is O(1)
-        insert operation is O(nlogn) in the worst case due to reduction of dataset at each step
-        overall the construction step has a worst case complexity O(nlogn)
+        insert operation is O(n^2) in the worst case driven by the while loop O(n) x the insert method with worst case O(n)
+        overall the construction step has a worst case complexity O(n^2)
     '''
     while q.length()>=2:
         # pull the first two priority items with lowest frequencies
@@ -101,6 +101,13 @@ def huffman_encoding(data):
         internal_node.left = first
         internal_node.right = second
         # insert new node back in the queue with frequency order
+        q.insert(internal_node)
+    
+    # Tree with just node if only 1 type of character to encode (priority queue has size of 1 with any frequency > 0)
+    else:                   
+        head = q.pull()
+        internal_node = Node(head.freq)
+        internal_node.left = head
         q.insert(internal_node)
     
     # Generate code for each character (leaf nodes)
@@ -173,7 +180,7 @@ if __name__ == "__main__":
     we observe compression of up to circa 2:1
     '''
     
-    sentences = ["AAAAAAABBBCCCCCCCDDEEEEEE", "The bird is the word", random.choice(['', 123, '@Udacity: Is this project finished?'])]
+    sentences = [ 'a', 'aaaa', "AAAAAAABBBCCCCCCCDDEEEEEE", "The bird is the word", random.choice(['', 123, '@Udacity: Is this project finished?'])]  # 
     
     for index, sentence in enumerate(sentences):
         

@@ -82,7 +82,7 @@ def union(llist_1, llist_2):  # Overall complexity O(n)
     return union_list
 
 
-def intersection(llist_1, llist_2):  # O(n1*n2), ie O(n^2) worst case
+def intersection(llist_1, llist_2):
     # Your Solution Here
     len_1 = llist_1.size()    # calculate length list1 - complexity O(n1)
     if len_1 == 0:            # check if list1 empty - complexity O(1)
@@ -90,36 +90,58 @@ def intersection(llist_1, llist_2):  # O(n1*n2), ie O(n^2) worst case
     len_2 = llist_2.size()    # calculate length list2 - complexity O(n2)
     if len_2 == 0:            # check if list2 empty - complexity O(1)
         return None
-
-    if len_1 < len_2:         # Take shortest list to traverse - O(1)
-        current = llist_2
-        bench = llist_1
-    else:
-        current = llist_1
-        bench = llist_2
         
-    intersection_list = LinkedList()
-    discovered_values = set()
+    discovered_values_1 = set()
+    discovered_values_2 = set()
     
-    node = current.head
-    while node:              # Traverse longest list once - O(max(n1,n2))
-        element = bench.head
-        while element:       # Traverse short list multiple times - worst case O(n1*n2)
-            if element.value == node.value :
-                if node.value in discovered_values:
-                    # do not add values already discovered
-                    break
-                else:
-                    # add the value not yet discovered
-                    intersection_list.append(element.value)
-                    break
-            element = element.next  
+    node = llist_1.head
+    while True:               # Traverse list once - O(n1)
+        discovered_values_1.add(node.value)
+        if node.next:
+            node = node.next
+            while node.value in discovered_values_1 and node.next: # Time complexity of this operation is O(1) on average
+                node = node.next
+        else:
+            break
         
-        # keep track of values already discovered to add them only once
-        discovered_values.add(node.value) 
-        node = node.next
+    node = llist_2.head
+    while True:               # Traverse list once - O(n2)
+        discovered_values_2.add(node.value)
+        if node.next:
+            node = node.next
+            while node.value in discovered_values_2 and node.next: # Time complexity of this operation is O(1) on average
+                node = node.next
+        else:
+            break
+    
+    intersection_list = LinkedList()
+    intersection_values = set()
+    
+    element = llist_1.head
+    while element:       # Traverse list - O(n1)
+        if (element.value not in discovered_values_1) or (element.value not in discovered_values_2): # Time complexity of this operation is O(1) on average
+            # do not add values not part of both sets
+            pass
+        elif element.value not in intersection_values:
+            # add the value not yet discovered and update the tracking set
+            intersection_list.append(element.value)
+            intersection_values.add(element.value)
+        element = element.next
+        
+    element = llist_2.head
+    while element:       # Traverse list - O(n2)
+        if (element.value not in discovered_values_1) or (element.value not in discovered_values_2): # Time complexity of this operation is O(1) on average
+            # do not add values not part of both sets
+            pass
+        elif element.value not in intersection_values:
+            # add the value not yet discovered and update the tracking set
+            intersection_list.append(element.value)
+            intersection_values.add(element.value)
+        element = element.next    
+    
 
     return intersection_list
+
 
 
 # Test case 1
@@ -235,31 +257,3 @@ print('list 1:', element_1)
 print('list 2:', element_2)
 print ('Union =',union(linked_list_11,linked_list_12))
 print ('Intersection', intersection(linked_list_11,linked_list_12))
-
-
-
-'''def union_old(llist_1, llist_2):  # Overall complexity O(n)
-    # Your Solution Here
-    len_1 = llist_1.size()    # calculate length list1 - complexity O(n1)
-    if len_1 == 0:            # check if list1 empty - complexity O(1)
-        return llist_2
-    len_2 = llist_2.size()    # calculate length list2 - complexity O(n2)
-    if len_2 == 0:            # check if list2 empty - complexity O(1)
-        return llist_1
-    
-    if len_1 < len_2:         # we choose the shortest list to traverse
-        tail = llist_1.head   
-    else:
-        tail = llist_2.head   
-    
-    while tail.next:          # find tail shortest list - O(min(n1,n2))
-        tail = tail.next
-    if len_1 < len_2:         # combine lists with shortest first - O(1)
-        tail.next = llist_2.head   
-    else:
-        tail.next = llist_1.head
-        
-    if len_1 < len_2:         # return union list - O(1)
-        return llist_1
-    else:
-        return llist_2'''
