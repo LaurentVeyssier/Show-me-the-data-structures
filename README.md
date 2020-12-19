@@ -61,21 +61,25 @@ The space complexity of our search operation is O(1) as we only return True/Fals
 
 
 - Problem 5: Blockchain
-**Design choice**
+  - **Design choice**:
 I use a Blockchain class with severale methods: append, get_transaction, get_hash, and __repr__. The blockchain is built as a linked list of Blocks (Block class).
 A block contains the timestamp of the transaction (when recorded), the data (content), the unique hash key (formed using timestamp and data which ensures a unique hash key) and a link to the hash of the previous transaction. An alternative is to use the previous hash + timestamp.
-**Time complexity**
+
+  - **Time complexity**:
 Complexity is O(n) with n = size of blockchain since we need to traverse the list in the worst case for all operations.
-**Space complexity**
+
+  - **Space complexity**:
 Complexity is proportional to n (number of blocks in blockchain) since each block hase a number of attributes. So space complexity is O(n).
 
 
 - Problem 6: Union and Intersection of Two Linked Lists
-**Design choice**
+  - **Design choice**:
 The Union and Intersection do not show duplicates. The output order is not important.
 I used a linked list structure and sets during intersection to avoid duplicate elements.
-**Time complexity**
+
+   - **Time complexity**:
 Union operation is of complexity O(n) with n the number of elements in the largest list. I approximate O(n1) + O(n2) to O(n) with n1 and n2 the number of items in each list.
 Intersection operation has a complexity proportional to O(n1) + O(n2) with n1 and n2 the number of items in each list. Using sets, time complexity of searching set is O(1) on average. So Intersection operation is of complexity O(n) with n the number of elements in the largest list.
-**Space complexity**
+
+  - **Space complexity**:
 Union is O(n1+n2) so O(n). For intersection, I use a total of three sets with worst case 3 x O(n). The output intersection linkedlist is also worst case O(n). So in total, intersation is proportional to n and has worst case space complexity of O(n).
