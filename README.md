@@ -8,17 +8,13 @@ The questions cover a variety of topics related to the data structures learned i
 # Content
 
 - Problem 1: Least Recently Used Cache
-
-**Design choice**
-
+  - **Design choice**
 I use a dictionary for the cached items as it provides complexity O(1) for get / set / delete operations. More precisely, I use an orderedDict() structure to keep track of usage order. orderedDict() can be used as a queue to manage least frequently used to most recently used key. The dict() is updated with each operation therefore behaving as a queue structure.
 
-**Time complexity**
-
+  - **Time complexity**
 All operations have constant time.
 
-**Space complexity**
-
+  - **Space complexity**
 The max capacity is managed looking at the length of the dictionary.
 Space complexity is O(capacity) which is equivalent to O(1) as it is independent from the number of operations performed.
 
