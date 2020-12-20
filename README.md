@@ -1,5 +1,5 @@
 # Show-me-the-data-structures
-Solve six programing tasks usign advanced data structures (linked list, queues, recursive functions...)
+Solve six programing tasks usign advanced data structures (linked list, queue, tree, recursive functions...)
 
 These programming challenges are part of the second project of UDACITY's [Data Structures & Algorithms Nanodegree Program](https://www.udacity.com/course/data-structures-and-algorithms-nanodegree--nd256).
 
